@@ -43,11 +43,13 @@ class BlueprintParser {
 		}
 
 		if ( $raw_blueprint instanceof Blueprint ) {
-			return $this->fromBlueprint( $raw_blueprint );
+			$blueprint = $this->fromBlueprint($raw_blueprint);
+			return $blueprint;
 		}
 
 		if ( $raw_blueprint instanceof BlueprintBuilder ) {
-			return $this->fromBlueprint( $raw_blueprint->toBlueprint() );
+			$blueprint1 = $this->fromBlueprint($raw_blueprint->toBlueprint());
+			return $blueprint1;
 		}
 
 		throw new InvalidArgumentException(

@@ -83,7 +83,10 @@ class StepsTest extends E2ETestCase {
 			->addStep( ( new RmStep() )->setPath( 'dir1' ) )
 			->addStep( ( new MkdirStep() )->setPath( 'dir2' ) );
 
-		$php_blueprint = $php_builder
+		$php_blueprint = BlueprintBuilder::create()
+			->addStep( ( new MkdirStep() )->setPath( 'dir1' ) )
+			->addStep( ( new RmStep() )->setPath( 'dir1' ) )
+			->addStep( ( new MkdirStep() )->setPath( 'dir2' ) )
 			->toBlueprint();
 
 		return array(

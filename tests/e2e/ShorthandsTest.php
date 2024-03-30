@@ -59,7 +59,7 @@ class ShorthandsTest extends E2ETestCase {
 
 		$step_result = trim ( $results[3]->result ); // RunWordPressInstallerStep result trimmed
 		$expected_result = 'Success: WordPress installed successfully.';
-		// For PHP <= 7.4 the success message is prefixed with: '#!/usr/bin/env php'
+		// For PHP <=7.3 the success message is prefixed with: '#!/usr/bin/env php'
 		self::assertStringContainsString( $expected_result, $step_result );
 
 		$expected_steps = TestConstants::prepare_steps_from_shorthand_word_press_version();
@@ -82,7 +82,8 @@ class ShorthandsTest extends E2ETestCase {
 		$php_builder = BlueprintBuilder::create()
 			->withWordPressVersion( 'https://wordpress.org/latest.zip' );
 
-		$php_blueprint = $php_builder
+		$php_blueprint = BlueprintBuilder::create()
+			->withWordPressVersion( 'https://wordpress.org/latest.zip' )
 			->toBlueprint();
 
 		return array(
