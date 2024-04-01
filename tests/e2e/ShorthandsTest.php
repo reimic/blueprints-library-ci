@@ -42,10 +42,10 @@ class ShorthandsTest extends E2ETestCase {
 		( new Filesystem() )->remove( $this->document_root );
 	}
 
-	/**
-	 * @dataProvider blueprint_with_word_press_version
-	 * @param string|stdClass|BlueprintBuilder|Blueprint $raw_blueprint
-	 */
+//	/**
+//	 * @dataProvider blueprint_with_word_press_version
+//	 * @param string|stdClass|BlueprintBuilder|Blueprint $raw_blueprint
+//	 */
 	public function testRunningBlueprintWithWordPressVersion(
 //		$raw_blueprint
 	) {
