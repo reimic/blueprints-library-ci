@@ -53,7 +53,7 @@ class ShorthandsTest extends E2ETestCase {
 //		var_dump( $raw_blueprint );
 
 //		/** @var StepSuccess[] $results */
-//		$results =
+		$results =
  		run_blueprint(
 //			$raw_blueprint,
 			'{}',
