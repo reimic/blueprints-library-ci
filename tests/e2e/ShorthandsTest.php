@@ -47,6 +47,9 @@ class ShorthandsTest extends E2ETestCase {
 	 * @param string|stdClass|BlueprintBuilder|Blueprint $raw_blueprint
 	 */
 	public function testRunningBlueprintWithWordPressVersion( $raw_blueprint ) {
+
+		var_dump( $raw_blueprint );
+
 		/** @var StepSuccess[] $results */
 		$results = run_blueprint(
 			$raw_blueprint,
@@ -57,12 +60,16 @@ class ShorthandsTest extends E2ETestCase {
 			)
 		);
 
+		var_dump( $results );
+
 		$step_result = trim ( $results[3]->result ); // RunWordPressInstallerStep result trimmed
 		$expected_result = 'Success: WordPress installed successfully.';
 		// For PHP <=7.3 the success message is prefixed with: '#!/usr/bin/env php'
 		self::assertStringContainsString( $expected_result, $step_result );
 
 		$expected_steps = TestConstants::prepare_steps_from_shorthand_word_press_version();
+
+		var_dump( $expected_steps );
 
 		foreach ( $results as $key => $result ) {
 			self::assertEquals( $result->step, $expected_steps[$key] );
