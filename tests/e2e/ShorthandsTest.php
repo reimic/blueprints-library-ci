@@ -46,13 +46,16 @@ class ShorthandsTest extends E2ETestCase {
 	 * @dataProvider blueprint_with_word_press_version
 	 * @param string|stdClass|BlueprintBuilder|Blueprint $raw_blueprint
 	 */
-	public function testRunningBlueprintWithWordPressVersion( $raw_blueprint ) {
+	public function testRunningBlueprintWithWordPressVersion(
+//		$raw_blueprint
+	) {
 
-		var_dump( $raw_blueprint );
+//		var_dump( $raw_blueprint );
 
 		/** @var StepSuccess[] $results */
 		$results = run_blueprint(
-			$raw_blueprint,
+//			$raw_blueprint,
+			'{}',
 			array(
 				'environment'        => ContainerBuilder::ENVIRONMENT_NATIVE,
 				'documentRoot'       => $this->document_root,
