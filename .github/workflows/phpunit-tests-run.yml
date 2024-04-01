@@ -35,6 +35,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '${{ inputs.php }}'
+          extensions: pdo_sqlite
           tools: phpunit-polyfills
 
       - name: Install Composer dependencies
