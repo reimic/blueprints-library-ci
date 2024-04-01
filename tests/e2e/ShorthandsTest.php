@@ -55,7 +55,6 @@ class ShorthandsTest extends E2ETestCase {
 		/** @var StepSuccess[] $results */
 		$results = run_blueprint(
 			$raw_blueprint,
-			'{}',
 			array(
 				'environment'        => ContainerBuilder::ENVIRONMENT_NATIVE,
 				'documentRoot'       => $this->document_root,
