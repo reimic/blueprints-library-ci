@@ -45,7 +45,7 @@ class StepsTest extends E2ETestCase {
 
 	/**
 	 * @dataProvider blueprint_with_mkdir_rm_steps
-	 * @param string|stdClass|BlueprintBuilder|Blueprint $raw_blueprint
+	 * @param string|stdClass|Blueprint $raw_blueprint
 	 */
 	public function testRunningBlueprintWithMkdirAndRmSteps( $raw_blueprint ) {
 		$results = run_blueprint(
@@ -78,11 +78,6 @@ class StepsTest extends E2ETestCase {
 
 		$json_std_class = json_decode( $json_string );
 
-		$php_builder = BlueprintBuilder::create()
-			->addStep( ( new MkdirStep() )->setPath( 'dir1' ) )
-			->addStep( ( new RmStep() )->setPath( 'dir1' ) )
-			->addStep( ( new MkdirStep() )->setPath( 'dir2' ) );
-
 		$php_blueprint = BlueprintBuilder::create()
 			->addStep( ( new MkdirStep() )->setPath( 'dir1' ) )
 			->addStep( ( new RmStep() )->setPath( 'dir1' ) )
@@ -92,7 +87,6 @@ class StepsTest extends E2ETestCase {
 		return array(
 			'JSON as string'                  => array( $json_string ),
 			'JSON as stdClass'                => array( $json_std_class ),
-			'BlueprintBuilder class instance' => array( $php_builder ),
 			'Blueprint class instance'        => array( $php_blueprint )
 		);
 	}
