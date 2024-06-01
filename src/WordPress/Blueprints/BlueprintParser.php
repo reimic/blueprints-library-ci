@@ -4,6 +4,7 @@ namespace WordPress\Blueprints;
 
 use InvalidArgumentException;
 use Opis\JsonSchema\Errors\ErrorFormatter;
+use stdClass;
 use WordPress\Blueprints\Model\BlueprintBuilder;
 use WordPress\Blueprints\Model\DataClass\Blueprint;
 
@@ -27,8 +28,13 @@ class BlueprintParser {
 		$this->mapper    = $mapper;
 	}
 
+	/**
+	 * @param Blueprint|string|stdClass $raw_blueprint
+	 * @return Blueprint
+	 * @throws InvalidArgumentException if unsupported input type or json string can not be decoded
+	 */
 	public function parse( $raw_blueprint ) {
-		if ( $raw_blueprint instanceof \stdClass ) {
+		if ( $raw_blueprint instanceof stdClass ) {
 			return $this->fromObject( $raw_blueprint );
 		}
 
@@ -43,22 +49,16 @@ class BlueprintParser {
 		}
 
 		if ( $raw_blueprint instanceof Blueprint ) {
-			$blueprint = $this->fromBlueprint($raw_blueprint);
-			return $blueprint;
-		}
-
-		if ( $raw_blueprint instanceof BlueprintBuilder ) {
-			$blueprint1 = $this->fromBlueprint($raw_blueprint->toBlueprint());
-			return $blueprint1;
+			return $this->fromBlueprint( $raw_blueprint );
 		}
 
 		throw new InvalidArgumentException(
-			'Unsupported $rawBlueprint type. Use a JSON string, a parsed JSON object, or a BlueprintBuilder instance.'
+			'Unsupported $rawBlueprint type. Use a JSON string, a parsed JSON object, or a Blueprint instance.'
 		);
 	}
 
 	/**
-	 * @param \stdClass $data
+	 * @param stdClass $data
 	 */
 	public function fromObject( $data ) {
 		$result = $this->validator->validate( $data );
