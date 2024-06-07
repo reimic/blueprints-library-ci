@@ -36,8 +36,11 @@ class TestConstants {
 			->setPath( 'wp-cli.phar' )
 			->setData( $wp_cli );
 
+		$options = ( new WordPressInstallationOptions() )
+			->setAdminUsername( 'admin' )
+			->setAdminPassword( 'admin' );
 		$run_word_press_installer_step = ( new RunWordPressInstallerStep() )
-			->setOptions( new WordPressInstallationOptions() );
+			->setOptions($options);
 
 		return array(
 			$download_word_press_step,

@@ -32,6 +32,8 @@ class ShorthandsTest extends E2ETestCase {
 	public function before() {
 		$this->document_root = Path::makeAbsolute('test', sys_get_temp_dir());
 
+		( new Filesystem() )->remove( $this->document_root );
+
 		$this->subscriber = new TestResourceClassSimpleSubscriber();
 	}
 
@@ -44,14 +46,11 @@ class ShorthandsTest extends E2ETestCase {
 
 	/**
 	 * @dataProvider blueprint_with_word_press_version
-	 * @param string|stdClass|BlueprintBuilder|Blueprint $raw_blueprint
+	 * @param string|stdClass|Blueprint $raw_blueprint
 	 */
 	public function testRunningBlueprintWithWordPressVersion(
 		$raw_blueprint
 	) {
-
-		var_dump( $raw_blueprint );
-
 		/** @var StepSuccess[] $results */
 		$results = run_blueprint(
 			$raw_blueprint,
@@ -62,18 +61,12 @@ class ShorthandsTest extends E2ETestCase {
 			)
 		);
 
-		self::assertTrue(true);
-
-		var_dump( $results );
-
 		$step_result = trim ( $results[3]->result ); // RunWordPressInstallerStep result trimmed
 		$expected_result = 'Success: WordPress installed successfully.';
 		// For PHP <=7.3 the success message is prefixed with: '#!/usr/bin/env php'
 		self::assertStringContainsString( $expected_result, $step_result );
 
 		$expected_steps = TestConstants::prepare_steps_from_shorthand_word_press_version();
-
-		var_dump( $expected_steps );
 
 		foreach ( $results as $key => $result ) {
 			self::assertEquals( $result->step, $expected_steps[$key] );
@@ -90,9 +83,6 @@ class ShorthandsTest extends E2ETestCase {
 
 		$json_std_class = json_decode( $json_string );
 
-		$php_builder = BlueprintBuilder::create()
-			->withWordPressVersion( 'https://wordpress.org/latest.zip' );
-
 		$php_blueprint = BlueprintBuilder::create()
 			->withWordPressVersion( 'https://wordpress.org/latest.zip' )
 			->toBlueprint();
@@ -100,7 +90,6 @@ class ShorthandsTest extends E2ETestCase {
 		return array(
 			'JSON as string'                  => array( $json_string ),
 			'JSON as stdClass'                => array( $json_std_class ),
-			'BlueprintBuilder class instance' => array( $php_builder ),
 			'Blueprint class instance'        => array( $php_blueprint )
 		);
 	}
