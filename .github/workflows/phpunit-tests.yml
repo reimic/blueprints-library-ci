@@ -11,7 +11,7 @@ on:
           - unit
           - e2e
         required: false
-        default: default
+        default: 'default'
   push:
   pull_request:
     branches:
@@ -35,6 +35,6 @@ jobs:
       php: ${{ matrix.php }}
       phpunit-config: 'phpunit.xml.dist'
       # for a manual workflow dispatch -> will use the TEST_SUITE value
-      # for pushes to any branch       -> will only run unit tests
+      # for all pushes to any branch   -> will only run unit tests
       # for pull requests to the trunk -> will run unit and e2e tests
       phpunit-testsuite: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.TEST_SUITE != '') && github.event.inputs.TEST_SUITE || (github.event_name == 'push' && 'unit') || 'default' }}
