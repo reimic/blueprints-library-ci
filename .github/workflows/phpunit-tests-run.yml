@@ -49,7 +49,6 @@ jobs:
   unit:
     name: Run PHPUnit unit tests
     runs-on: ${{ inputs.OS }}
-    needs: prepare
 
     steps:
       - name: Run PHPUnit unit tests
@@ -60,7 +59,6 @@ jobs:
     name: Run PHPUnit e2e tests
     runs-on: ${{ inputs.OS }}
     timeout-minutes: 5
-    needs: prepare
 
     steps:
       - name: Run PHPUnit e2e tests
