@@ -82,7 +82,7 @@ class StepsTest extends E2ETestCase {
 	 * @return array
 	 */
 	public static function blueprint_with_mkdir_rm_steps(): array {
-		$json_string = '{"steps":[{"step":"mkdir","path":"dir1"},{"step": "rm","path": "dir1"},{"step":"mkdir","path":"dir2"}]}';
+		$json_string = '{"steps":[{"step":"mkdir","path":"dir1"},{"step": "rm","path": "dir1"},{"step":"mkdir","path":"aaa2"}]}';
 
 		$json_std_class = json_decode( $json_string );
 
