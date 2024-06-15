@@ -24,7 +24,7 @@ env:
   PHPUNIT_CONFIG: phpunit.xml.dist
 
 jobs:
-  prepare:
+  phpunit-tests:
     name: ${{ inputs.OS }}
     runs-on: ${{ inputs.OS }}
     timeout-minutes: 5
@@ -46,21 +46,10 @@ jobs:
           ignore-cache: "yes"
           composer-options: "--optimize-autoloader"
 
-  unit:
-    name: Run PHPUnit unit tests
-    runs-on: ${{ inputs.OS }}
-
-    steps:
       - name: Run PHPUnit unit tests
         if: ${{ contains( fromJSON( '["unit", "all"]' ), inputs.TEST_SUITE ) }}
         run: phpunit --testsuite unit --testdox
 
-  e2e:
-    name: Run PHPUnit e2e tests
-    runs-on: ${{ inputs.OS }}
-    timeout-minutes: 5
-
-    steps:
       - name: Run PHPUnit e2e tests
         if: ${{ contains( fromJSON( '["e2e", "all"]' ), inputs.TEST_SUITE ) }}
         run: phpunit --testsuite e2e --testdox
