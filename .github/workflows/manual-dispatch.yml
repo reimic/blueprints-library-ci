@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       PHP:
-        description: 'pick which PHP version to run with'
+        description: 'pick which PHP version to use'
         type: choice
         options:
           - all
@@ -18,7 +18,7 @@ on:
         required: false
         default: all
       OS:
-        description: 'pick which OS version to run on'
+        description: 'pick which OS to run on'
         type: choice
         options:
           - all
@@ -37,7 +37,8 @@ on:
         required: false
         default: all
 
-run-name: Manual Tests Dispatch PHP ${{ github.event.inputs.PHP }} OS ${{ github.event.inputs.OS }} TEST SUITE ${{ github.event.inputs.TEST_SUITE }}
+run-name: >- 
+  PHP: ${{ github.event.inputs.PHP }} OS: ${{ github.event.inputs.OS }} TEST SUITE: ${{ github.event.inputs.TEST_SUITE }}
 
 jobs:
   test:
@@ -56,3 +57,4 @@ jobs:
       OS: ${{ matrix.os }}
       PHP: ${{ matrix.php }}
       TEST_SUITE: ${{ github.event.inputs.TEST_SUITE }}
+      FAIL_FAST: false

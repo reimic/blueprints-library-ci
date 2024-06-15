@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       OS:
-        description: 'Operating system to run tests on'
+        description: 'The operating system to run tests on'
         required: false
         type: 'string'
         default: 'ubuntu-latest'
@@ -18,6 +18,11 @@ on:
         required: false
         type: 'string'
         default: 'all'
+      FAIL_FAST:
+        description: 'If test job should fail at first defect'
+        required: false
+        type: boolean
+        default: true
 
 env:
   LOCAL_PHP: ${{ inputs.PHP }}-fpm
@@ -48,8 +53,9 @@ jobs:
 
       - name: Run PHPUnit unit tests
         if: ${{ contains( fromJSON( '["unit", "all"]' ), inputs.TEST_SUITE ) }}
-        run: phpunit --testsuite unit --testdox
+        run: phpunit --testsuite unit --testdox ${{ inputs.FAIL_FAST && '--stop-on-defect' }}
+        continue-on-error: ${{ ! inputs.FAIL_FAST }}
 
       - name: Run PHPUnit e2e tests
         if: ${{ contains( fromJSON( '["e2e", "all"]' ), inputs.TEST_SUITE ) }}
-        run: phpunit --testsuite e2e --testdox
+        run: phpunit --testsuite e2e --testdox ${{ inputs.FAIL_FAST && '--stop-on-defect' }}
