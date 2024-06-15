@@ -53,9 +53,9 @@ jobs:
 
       - name: Run PHPUnit unit tests
         if: ${{ contains( fromJSON( '["unit", "all"]' ), inputs.TEST_SUITE ) }}
-        run: phpunit --testsuite unit --testdox ${{ inputs.FAIL_FAST && '--stop-on-defect' }}
+        run: phpunit --testsuite unit --testdox ${{ inputs.FAIL_FAST && '--stop-on-defect --fail-on-warning --fail-on-risky' }}
         continue-on-error: ${{ ! inputs.FAIL_FAST }}
 
       - name: Run PHPUnit e2e tests
         if: ${{ contains( fromJSON( '["e2e", "all"]' ), inputs.TEST_SUITE ) }}
-        run: phpunit --testsuite e2e --testdox ${{ inputs.FAIL_FAST && '--stop-on-defect' }}
+        run: phpunit --testsuite e2e --testdox ${{ inputs.FAIL_FAST && '--stop-on-defect --fail-on-warning --fail-on-risky' }}
