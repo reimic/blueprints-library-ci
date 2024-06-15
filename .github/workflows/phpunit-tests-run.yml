@@ -47,9 +47,9 @@ jobs:
           composer-options: "--optimize-autoloader"
 
       - name: Run PHPUnit unit tests
-        if: ${{ input.TEST_SUITE == 'unit' || input.TEST_SUITE == 'all' }}
+        if: ${{ inputs.TEST_SUITE == 'unit' || inputs.TEST_SUITE == 'all' }}
         run: phpunit --testsuite unit --testdox
 
       - name: Run PHPUnit e2e tests
-        if: ${{ input.TEST_SUITE == 'e2e' || input.TEST_SUITE == 'all' }}
+        if: ${{ inputs.TEST_SUITE == 'e2e' || inputs.TEST_SUITE == 'all' }}
         run: phpunit --testsuite e2e --testdox
