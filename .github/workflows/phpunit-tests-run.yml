@@ -10,8 +10,9 @@ on:
         default: 'ubuntu-latest'
       php:
         description: 'The version of PHP to use, in the format of X.Y'
-        required: true
+        required: false
         type: 'string'
+        default: '7.2'
       phpunit-config:
         description: 'The PHPUnit configuration file to use'
         required: false
@@ -21,7 +22,7 @@ on:
         description: 'The PHPUnit test suite to use'
         required: false
         type: 'string'
-        default: 'default'
+        default: 'all'
 
 env:
   LOCAL_PHP: ${{ inputs.php }}-fpm
