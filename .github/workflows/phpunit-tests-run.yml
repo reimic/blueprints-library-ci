@@ -31,7 +31,7 @@ env:
 
 jobs:
   phpunit-tests:
-    name: ${{ inputs.OS }} ${{ inputs.TEST_SUITE }}
+    name: ${{ inputs.OS }}
     runs-on: ${{ inputs.OS }}
     timeout-minutes: 5
 
