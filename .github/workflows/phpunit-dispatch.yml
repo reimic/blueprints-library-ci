@@ -1,4 +1,4 @@
-name: Manual Tests Dispatch PHP ${{ github.event.inputs.PHP }} OS ${{ github.event.inputs.OS }} TEST SUITE ${{ github.event.inputs.TEST_SUITE }}
+name: Manual Tests Dispatch
 
 on:
   workflow_dispatch:
@@ -36,6 +36,8 @@ on:
           - e2e
         required: false
         default: all
+
+run-name: Manual Tests Dispatch PHP ${{ github.event.inputs.PHP }} OS ${{ github.event.inputs.OS }} TEST SUITE ${{ github.event.inputs.TEST_SUITE }}
 
 jobs:
   test:
