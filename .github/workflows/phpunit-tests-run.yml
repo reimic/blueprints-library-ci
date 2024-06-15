@@ -25,7 +25,7 @@ env:
 
 jobs:
   prepare:
-    name: Prepare
+    name: ${{ inputs.OS }}
     runs-on: ${{ inputs.OS }}
     timeout-minutes: 5
 
