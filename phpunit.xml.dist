@@ -4,10 +4,10 @@
         bootstrap="vendor/autoload.php"
         colors="true"
         beStrictAboutOutputDuringTests="true"
-        cacheResultFile=".cache"
+        defaultTestSuite="all"
 >
     <testsuites>
-        <testsuite name="default">
+        <testsuite name="all">
             <directory>tests</directory>
         </testsuite>
         <testsuite name="unit">
