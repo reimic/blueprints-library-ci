@@ -7,7 +7,7 @@ on:
         description: 'The operating system to run tests on'
         required: false
         type: 'string'
-        default: 'ubuntu-latest'
+        default: ubuntu-latest
       PHP:
         description: 'The version of PHP to use, in the format of X.Y'
         required: false
@@ -17,7 +17,7 @@ on:
         description: 'The PHPUnit test suite to use'
         required: false
         type: 'string'
-        default: 'all'
+        default: unit
       FAIL_FAST:
         description: 'If test job should fail at first defect'
         required: false
@@ -27,6 +27,7 @@ on:
 env:
   LOCAL_PHP: ${{ inputs.PHP }}-fpm
   PHPUNIT_CONFIG: phpunit.xml.dist
+  STRICT_FLAGS: ${{ ( inputs.FAIL_FAST && '--stop-on-defect --fail-on-warning --fail-on-risky' ) || '' }}
 
 jobs:
   phpunit-tests:
@@ -52,10 +53,10 @@ jobs:
           composer-options: "--optimize-autoloader"
 
       - name: Run PHPUnit unit tests
-        if: ${{ contains( fromJSON( '["unit", "all"]' ), inputs.TEST_SUITE ) }}
-        run: phpunit --testsuite unit --testdox ${{ inputs.FAIL_FAST && '--stop-on-defect --fail-on-warning --fail-on-risky' }}
-        continue-on-error: ${{ ! inputs.FAIL_FAST }}
+        id: unit
+        if: contains( fromJSON( '["unit", "all"]' ), inputs.TEST_SUITE )
+        run: phpunit --testsuite unit --testdox ${{ env.STRICT_FLAGS }}
 
       - name: Run PHPUnit e2e tests
-        if: ${{ contains( fromJSON( '["e2e", "all"]' ), inputs.TEST_SUITE ) }}
-        run: phpunit --testsuite e2e --testdox ${{ inputs.FAIL_FAST && '--stop-on-defect --fail-on-warning --fail-on-risky' }}
+        if: inputs.TEST_SUITE == 'e2e' || ( inputs.TEST_SUITE == 'all' && ( ! inputs.FAIL_FAST || steps.unit.outcome == 'success' ) )
+        run: phpunit --testsuite e2e --testdox ${{ env.STRICT_FLAGS }}
