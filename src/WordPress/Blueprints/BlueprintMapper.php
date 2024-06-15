@@ -51,6 +51,7 @@ class BlueprintMapper {
 		}
 
 		if ( is_string( $value ) ) {
+			$variable = 1;
 			return $value;
 		}
 		if ( ! isset( $value->resource ) ) {

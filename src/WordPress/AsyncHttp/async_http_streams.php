@@ -219,17 +219,17 @@ function stream_http_prepare_request_bytes( $url ) {
 	$parts   = parse_url( $url );
 	$host    = $parts['host'];
 	$path    = $parts['path'] . ( isset( $parts['query'] ) ? '?' . $parts['query'] : '' );
-	$request = <<<REQUEST
-GET $path HTTP/1.0
-Host: $host
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Accept-Language: en-US,en;q=0.9
-Connection: close
-REQUEST;
+	$request_parts = array(
+		"GET $path HTTP/1.0",
+		"Host: $host",
+		"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36",
+		"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+		"Accept-Language: en-US,en;q=0.9",
+		"Connection: close"
+	);
 
 	// @TODO: Add support for Accept-Encoding: gzip
-	return $request . "\r\n\r\n";
+	return implode( "\r\n", $request_parts ) . "\r\n\r\n";
 }
 
 /**
@@ -314,14 +314,13 @@ function streams_send_http_requests( array $requests ) {
 		foreach ( array_keys( $responses ) as $k ) {
 			$response_statuses[ $k ] = $responses[ $k ]['status'];
 			$code = $response_statuses[ $k ]['code'];
-			if ( $code > 399 || $code < 200 ) {
-				// an optional step's resource should be able to fail the download, but do not
-				// fail the whole process
-
-				// ok for now, would recommend passing code and setting appropriate status RequestInfo::STATE_FAILED
-				throw new Exception( 'Failed to download file ' . $requests[ $k ]->url . ': Server responded with HTTP code ' . $code );
-				// still
-			}
+//			if ( $code > 399 || $code < 200 ) {
+//				// an optional step's resource should be able to fail the download, but do not
+//				// fail the whole process
+//
+//				// ok for now, would recommend passing code and setting appropriate status RequestInfo::STATE_FAILED
+//				throw new Exception( 'Failed to download file ' . $requests[ $k ]->url . ': Server responded with HTTP code ' . $code );
+//			}
 
 			$response_headers[ $k ]  = $responses[ $k ]['headers'];
 			if ( isset( $response_headers[ $k ]['location'] ) ) {
