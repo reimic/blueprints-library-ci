@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       PHP:
-        description: 'pick which PHPUnit test suite to run'
+        description: 'pick which PHP version to run with'
         type: choice
         options:
           - 'all'
@@ -18,7 +18,7 @@ on:
         required: false
         default: 'all'
       OS:
-        description: 'pick which PHPUnit test suite to run'
+        description: 'pick which OS version to run on'
         type: choice
         options:
           - 'all'
@@ -39,7 +39,7 @@ on:
 
 jobs:
   test:
-    name: PHP ${{ matrix.php }} OS ${{ matrix.os }} SUITE ${{ github.event.inputs.TEST_SUITE }}
+    name: PHP ${{ matrix.php }}
     uses: ./.github/workflows/phpunit-tests-run.yml
     permissions:
       contents: read
@@ -49,9 +49,3 @@ jobs:
       matrix:
         os: ${{ ( github.event.inputs.OS == 'all' && fromJSON('["ubuntu-latest", "macos-latest", "windows-latest"]') ) || github.event.inputs.OS }}
         php: ${{ ( github.event.inputs.PHP == 'all' && fromJSON('["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3"]') ) || github.event.inputs.OS }}
-
-    with:
-      os: ${{ matrix.os }}
-      php: ${{ matrix.php }}
-      phpunit-config: 'phpunit.xml.dist'
-      phpunit-testsuite: ${{ github.event.inputs.TEST_SUITE }}

@@ -3,36 +3,31 @@ name: Run PHPUnit tests
 on:
   workflow_call:
     inputs:
-      os:
+      OS:
         description: 'Operating system to run tests on'
         required: false
         type: 'string'
         default: 'ubuntu-latest'
-      php:
+      PHP:
         description: 'The version of PHP to use, in the format of X.Y'
         required: false
         type: 'string'
         default: '7.2'
-      phpunit-config:
-        description: 'The PHPUnit configuration file to use'
-        required: false
-        type: 'string'
-        default: 'phpunit.xml.dist'
-      phpunit-testsuite:
+      TEST_SUITE:
         description: 'The PHPUnit test suite to use'
         required: false
         type: 'string'
         default: 'all'
 
 env:
-  LOCAL_PHP: ${{ inputs.php }}-fpm
-  PHPUNIT_CONFIG: ${{ inputs.phpunit-config }}
+  LOCAL_PHP: ${{ inputs.PHP }}-fpm
+  PHPUNIT_CONFIG: phpunit.xml.dist
 
 jobs:
   phpunit-tests:
-    name: ${{ inputs.os }}
-    runs-on: ${{ inputs.os }}
-    timeout-minutes: 20
+    name: ${{ inputs.OS }} ${{ inputs.TEST_SUITE }}
+    runs-on: ${{ inputs.OS }}
+    timeout-minutes: 5
 
     steps:
       - name: Checkout repository
@@ -41,7 +36,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '${{ inputs.php }}'
+          php-version: '${{ inputs.PHP }}'
           tools: phpunit-polyfills
           extensions: zip, pdo_sqlite, sqlite3
 
@@ -52,4 +47,4 @@ jobs:
           composer-options: "--optimize-autoloader"
 
       - name: Run PHPUnit tests
-        run: phpunit --testsuite ${{inputs.phpunit-testsuite}} --testdox
+        run: phpunit --testsuite ${{inputs.TEST_SUITE}} --testdox
