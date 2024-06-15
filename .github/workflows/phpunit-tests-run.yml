@@ -25,7 +25,7 @@ env:
 
 jobs:
   phpunit-tests:
-    name: ${{ inputs.OS }} ${{ inputs.TEST_SUITE }}
+    name: ${{ inputs.OS }}
     runs-on: ${{ inputs.OS }}
     timeout-minutes: 5
 
@@ -46,5 +46,10 @@ jobs:
           ignore-cache: "yes"
           composer-options: "--optimize-autoloader"
 
-      - name: Run PHPUnit tests
-        run: phpunit --testsuite ${{inputs.TEST_SUITE}} --testdox
+      - name: Run PHPUnit unit tests
+        if: input.TEST_SUITE == 'unit' || input.TEST_SUITE == 'all'
+        run: phpunit --testsuite unit --testdox
+
+      - name: Run PHPUnit e2e tests
+        if: input.TEST_SUITE == 'e2e' || input.TEST_SUITE == 'all'
+        run: phpunit --testsuite e2e --testdox
