@@ -7,7 +7,7 @@ on:
         description: 'pick which PHP version to run with'
         type: choice
         options:
-          - 'all'
+          - all
           - '7.2'
           - '7.3'
           - '7.4'
@@ -16,26 +16,26 @@ on:
           - '8.2'
           - '8.3'
         required: false
-        default: 'all'
+        default: all
       OS:
         description: 'pick which OS version to run on'
         type: choice
         options:
-          - 'all'
-          - 'ubuntu-latest'
-          - 'macos-latest'
-          - 'windows-latest'
+          - all
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
         required: false
-        default: 'all'
+        default: all
       TEST_SUITE:
         description: 'pick which PHPUnit test suite to run'
         type: choice
         options:
-          - 'all'
-          - 'unit'
-          - 'e2e'
+          - all
+          - unit
+          - e2e
         required: false
-        default: 'all'
+        default: all
 
 jobs:
   test:
