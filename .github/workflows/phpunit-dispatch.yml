@@ -47,5 +47,5 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ${{ ( github.event.inputs.OS == 'all' && fromJSON('["ubuntu-latest", "macos-latest", "windows-latest"]') ) || github.event.inputs.OS }}
+        os: ${{ ( github.event.inputs.OS == 'all' && fromJSON('["ubuntu-latest", "macos-latest", "windows-latest"]') ) || fromJSON( format( '["{0}"]', github.event.inputs.OS ) ) }}
         php: ${{ ( github.event.inputs.PHP == 'all' && fromJSON('["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3"]') ) || github.event.inputs.OS }}
